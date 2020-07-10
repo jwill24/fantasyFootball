@@ -11,6 +11,23 @@ import math
 import numpy as np
 import scipy.stats as stats
 import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
+
+def rgb(list):
+    new_list = [float(x)/float(265) for x in list]
+    return new_list
+    
+myRed = (242,95,92)
+myOrange = (254,94,65)
+myYellow = (255,242,117)
+myLightGreen = (91,186,11)
+myGreen = (77,170,87)
+myDarkGreen = (38,83,43)
+myBlue = (53,129,184)
+colors_qt = [rgb(myRed), rgb(myLightGreen), rgb(myBlue)]
+colors_rw = [rgb(myRed), rgb(myOrange), rgb(myYellow), rgb(myLightGreen), rgb(myGreen), rgb(myDarkGreen), rgb(myBlue)]
+myCM_qt = LinearSegmentedColormap.from_list('my_list', colors_qt, N=3)
+myCM_rw = LinearSegmentedColormap.from_list('my_list', colors_rw, N=7)
 
 
 def getValues():
@@ -121,10 +138,10 @@ def plotRosters(owners):
     hq, hr, hw, ht = makeHistVec(q), makeHistVec(r), makeHistVec(w), makeHistVec(t)
     fig, ax = plt.subplots()
     fig.canvas.draw()
-    plt.hist2d(np.full(sum(q),0,dtype=int), hq, bins=[1,10], range=np.array([(0,1), (0,10)]), cmap=plt.cm.RdYlGn)
-    plt.hist2d(np.full(sum(r),1,dtype=int), hr, bins=[1,10], range=np.array([(1,2), (0,10)]), cmap=plt.cm.RdYlGn)
-    plt.hist2d(np.full(sum(w),2,dtype=int), hw, bins=[1,10], range=np.array([(2,3), (0,10)]), cmap=plt.cm.RdYlGn)
-    plt.hist2d(np.full(sum(t),3,dtype=int), ht, bins=[1,10], range=np.array([(3,4), (0,10)]), cmap=plt.cm.RdYlGn)
+    plt.hist2d(np.full(sum(q),0,dtype=int), hq, bins=[1,10], range=np.array([(0,1), (0,10)]), cmap=myCM_qt)
+    plt.hist2d(np.full(sum(r),1,dtype=int), hr, bins=[1,10], range=np.array([(1,2), (0,10)]), cmap=myCM_rw)
+    plt.hist2d(np.full(sum(w),2,dtype=int), hw, bins=[1,10], range=np.array([(2,3), (0,10)]), cmap=myCM_rw)
+    plt.hist2d(np.full(sum(t),3,dtype=int), ht, bins=[1,10], range=np.array([(3,4), (0,10)]), cmap=myCM_qt)
     for i, num in enumerate(q): plt.text(0.45, i+0.45, str(num))
     for i, num in enumerate(r): plt.text(1.45, i+0.45, str(num))
     for i, num in enumerate(w): plt.text(2.45, i+0.45, str(num))
