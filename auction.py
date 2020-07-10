@@ -24,8 +24,10 @@ myLightGreen = (91,186,11)
 myGreen = (77,170,87)
 myDarkGreen = (38,83,43)
 myBlue = (53,129,184)
-colors_qt = [rgb(myRed), rgb(myLightGreen), rgb(myBlue)]
-colors_rw = [rgb(myRed), rgb(myOrange), rgb(myYellow), rgb(myLightGreen), rgb(myGreen), rgb(myDarkGreen), rgb(myBlue)]
+#colors_qt = [rgb(myRed), rgb(myLightGreen), rgb(myBlue)]
+#colors_rw = [rgb(myRed), rgb(myOrange), rgb(myYellow), rgb(myLightGreen), rgb(myGreen), rgb(myDarkGreen), rgb(myBlue)]
+colors_qt = ['red','limegreen','blue']
+colors_rw = ['red','orange','yellow','lime','limegreen','forestgreen','blue']
 myCM_qt = LinearSegmentedColormap.from_list('my_list', colors_qt, N=3)
 myCM_rw = LinearSegmentedColormap.from_list('my_list', colors_rw, N=7)
 
@@ -125,6 +127,11 @@ def makeHistVec(l):
     for i, item in enumerate(l):
         for p in range(item): hl.append(i)
     return hl
+
+def makeText(list,pos):
+    for i, num in enumerate(list):
+        if i == 10: return
+        plt.text(pos+0.45, i+0.45, str(num))
     
 def plotRosters(owners):
     q, r, w, t = [], [], [], []
@@ -138,14 +145,15 @@ def plotRosters(owners):
     hq, hr, hw, ht = makeHistVec(q), makeHistVec(r), makeHistVec(w), makeHistVec(t)
     fig, ax = plt.subplots()
     fig.canvas.draw()
-    plt.hist2d(np.full(sum(q),0,dtype=int), hq, bins=[1,10], range=np.array([(0,1), (0,10)]), cmap=myCM_qt)
-    plt.hist2d(np.full(sum(r),1,dtype=int), hr, bins=[1,10], range=np.array([(1,2), (0,10)]), cmap=myCM_rw)
-    plt.hist2d(np.full(sum(w),2,dtype=int), hw, bins=[1,10], range=np.array([(2,3), (0,10)]), cmap=myCM_rw)
-    plt.hist2d(np.full(sum(t),3,dtype=int), ht, bins=[1,10], range=np.array([(3,4), (0,10)]), cmap=myCM_qt)
-    for i, num in enumerate(q): plt.text(0.45, i+0.45, str(num))
-    for i, num in enumerate(r): plt.text(1.45, i+0.45, str(num))
-    for i, num in enumerate(w): plt.text(2.45, i+0.45, str(num))
-    for i, num in enumerate(t): plt.text(3.45, i+0.45, str(num))
+    plt.hist2d(np.full(sum(q),0,dtype=int), hq, bins=[1,11], range=np.array([(0,1), (0,11)]), cmap=myCM_qt)
+    plt.hist2d(np.full(sum(r),1,dtype=int), hr, bins=[1,11], range=np.array([(1,2), (0,11)]), cmap=myCM_rw)
+    plt.hist2d(np.full(sum(w),2,dtype=int), hw, bins=[1,11], range=np.array([(2,3), (0,11)]), cmap=myCM_rw)
+    plt.hist2d(np.full(sum(t),3,dtype=int), ht, bins=[1,11], range=np.array([(3,4), (0,11)]), cmap=myCM_qt)
+    #for i, num in enumerate(q): plt.text(0.45, i+0.45, str(num))
+    makeText(q,0), makeText(r,1), makeText(w,2), makeText(t,3)
+    #for i, num in enumerate(r): plt.text(1.45, i+0.45, str(num))
+    #for i, num in enumerate(w): plt.text(2.45, i+0.45, str(num))
+    #for i, num in enumerate(t): plt.text(3.45, i+0.45, str(num))
     plt.title('Current Rosters', fontweight='bold', fontsize=16)
     plt.xlim(0,4), plt.ylim(0,10)
     ax.set_xticks( [0.5,1.5,2.5,3.5] )
@@ -165,7 +173,8 @@ owners = [["blake  ",0,0,2,0], ["brandon",0,1,1,0],
           ["dexter ",0,2,0,0], ["jordan ",1,0,1,0],
           ["justin ",0,2,0,0], ["kyle   ",1,1,0,0],
           ["matt   ",1,0,1,0], ["nick   ",0,0,2,0],
-          ["tristin",0,1,1,0], ["tyler  ",0,2,0,0]]
+          ["tristin",0,1,1,0], ["tyler  ",0,2,0,0],
+          ["dummy  ",2,7,7,2]]
 df = getValues()
 
 
