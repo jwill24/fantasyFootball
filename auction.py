@@ -1,5 +1,4 @@
 # --- Improvements ---
-# Make 4 separate 2d hists plotted together (colors relative to columns)
 
 import requests
 import csv
@@ -104,27 +103,41 @@ def makePlots(value):
     plt.title(name)
     plt.show()
 
+def makeHistVec(l):
+    hl = []
+    for i, item in enumerate(l):
+        for p in range(item): hl.append(i)
+    return hl
+    
 def plotRosters(owners):
-    x, y = [], []
-    for i, owner in enumerate(owners):
-        for j, pos in enumerate(owner):
-            if j == 0: continue
-            for p in range(pos): x.append(j-1), y.append(i)
+    q, r, w, t = [], [], [], []
+    for owner in owners:
+        for i, pos in enumerate(owner):
+            if i == 0: continue
+            if i == 1: q.append(pos)
+            if i == 2: r.append(pos)
+            if i == 3: w.append(pos)
+            if i == 4: t.append(pos)
+    hq, hr, hw, ht = makeHistVec(q), makeHistVec(r), makeHistVec(w), makeHistVec(t)
     fig, ax = plt.subplots()
     fig.canvas.draw()
-    (h, xedges, yedges, image) = plt.hist2d(x, y, bins=[4,10], range=np.array([(0, 4), (0, 10)]), cmap=plt.cm.autumn) #OrRd RdYlGn gist_rainbow
-    for i,vec in enumerate(h):
-        for j, num in enumerate(vec):
-            plt.text(i+0.45, j+0.45, str(int(num)))
+    plt.hist2d(np.full(sum(q),0,dtype=int), hq, bins=[1,10], range=np.array([(0,1), (0,10)]), cmap=plt.cm.autumn)
+    plt.hist2d(np.full(sum(r),1,dtype=int), hr, bins=[1,10], range=np.array([(1,2), (0,10)]), cmap=plt.cm.autumn)
+    plt.hist2d(np.full(sum(w),2,dtype=int), hw, bins=[1,10], range=np.array([(2,3), (0,10)]), cmap=plt.cm.autumn)
+    plt.hist2d(np.full(sum(t),3,dtype=int), ht, bins=[1,10], range=np.array([(3,4), (0,10)]), cmap=plt.cm.autumn)
+    for i, num in enumerate(q): plt.text(0.45, i+0.45, str(num))
+    for i, num in enumerate(r): plt.text(1.45, i+0.45, str(num))
+    for i, num in enumerate(w): plt.text(2.45, i+0.45, str(num))
+    for i, num in enumerate(t): plt.text(3.45, i+0.45, str(num))
     plt.title('Current Rosters', fontweight='bold', fontsize=16)
     plt.xlim(0,4), plt.ylim(0,10)
     ax.set_xticks( [0.5,1.5,2.5,3.5] )
     ax.set_xticklabels(['QB', 'RB', 'WR', 'TE'])
     ax.set_yticks( [0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5,9.5] )
-    #ax.set_yticklabels([k[0].replace(' ','')  for k in owners])
-    #ax.set_yticklabels(['Tyler','Tristin','Nick','Matt','Kyle','Justin','Jordan','Dexter','Brandon','Blake'])
     ax.set_yticklabels(['Blake','Brandon','Dexter','Jordan','Justin','Kyle','Matt','Nick','Tristin','Tyler'])
-    plt.savefig('rosters.png')
+    fig = plt.gcf()
+    fig.set_size_inches(5.5, 10)
+    plt.savefig('rosters.png', dpi=100)
     bashCommand = 'open rosters.png'
     process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
@@ -148,7 +161,6 @@ while True:
         print('Not an owner. Try again!')
         continue
     
-    #makePlots(value)
     plotRosters(owners)
             
     
