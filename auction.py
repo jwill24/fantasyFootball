@@ -121,10 +121,10 @@ def plotRosters(owners):
     hq, hr, hw, ht = makeHistVec(q), makeHistVec(r), makeHistVec(w), makeHistVec(t)
     fig, ax = plt.subplots()
     fig.canvas.draw()
-    plt.hist2d(np.full(sum(q),0,dtype=int), hq, bins=[1,10], range=np.array([(0,1), (0,10)]), cmap=plt.cm.autumn)
-    plt.hist2d(np.full(sum(r),1,dtype=int), hr, bins=[1,10], range=np.array([(1,2), (0,10)]), cmap=plt.cm.autumn)
-    plt.hist2d(np.full(sum(w),2,dtype=int), hw, bins=[1,10], range=np.array([(2,3), (0,10)]), cmap=plt.cm.autumn)
-    plt.hist2d(np.full(sum(t),3,dtype=int), ht, bins=[1,10], range=np.array([(3,4), (0,10)]), cmap=plt.cm.autumn)
+    plt.hist2d(np.full(sum(q),0,dtype=int), hq, bins=[1,10], range=np.array([(0,1), (0,10)]), cmap=plt.cm.RdYlGn)
+    plt.hist2d(np.full(sum(r),1,dtype=int), hr, bins=[1,10], range=np.array([(1,2), (0,10)]), cmap=plt.cm.RdYlGn)
+    plt.hist2d(np.full(sum(w),2,dtype=int), hw, bins=[1,10], range=np.array([(2,3), (0,10)]), cmap=plt.cm.RdYlGn)
+    plt.hist2d(np.full(sum(t),3,dtype=int), ht, bins=[1,10], range=np.array([(3,4), (0,10)]), cmap=plt.cm.RdYlGn)
     for i, num in enumerate(q): plt.text(0.45, i+0.45, str(num))
     for i, num in enumerate(r): plt.text(1.45, i+0.45, str(num))
     for i, num in enumerate(w): plt.text(2.45, i+0.45, str(num))
@@ -144,7 +144,7 @@ def plotRosters(owners):
 
 #------------------------------------------------------------------
 
-owners = [["blake  ",0,0,2,0], ["brandon",0,1,0,1],
+owners = [["blake  ",0,0,2,0], ["brandon",0,1,1,0],
           ["dexter ",0,2,0,0], ["jordan ",1,0,1,0],
           ["justin ",0,2,0,0], ["kyle   ",1,1,0,0],
           ["matt   ",1,0,1,0], ["nick   ",0,0,2,0],
